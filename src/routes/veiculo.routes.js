@@ -1,22 +1,25 @@
 import { Router } from "express";
-import veiculoService from '../services/produtos.service.js';
+import veiculoService from '../services/veiculo.service.js';
 
-export const veiculoRouter = router()
-veiculoRouter.get("/", async (req, res)) => {
+
+const veiculoRouter = Router();
+
+veiculoRouter.get("/", async (req, res) => {
     const veiculo = await veiculoService.getAll();
     return res.json(veiculo);
-}
+});
 
-veiculorouter.post('/', async (req, res) => {
+veiculoRouter.post('/', async (req, res) => {
   try {
-    const veiculo = await veiculoService.listarVeiculo
-    res.json(veiculos)
+    const veiculo = await veiculoService.create(req.body);
+    res.json(veiculo)
       } catch (error) {
         console.error(error);
       }
-    }
-)
+    })
+
  ;
+export { veiculoRouter };
 
 
 
@@ -32,5 +35,4 @@ veiculorouter.post('/', async (req, res) => {
 
 
 
-
-export default router;
+export default veiculoRouter;

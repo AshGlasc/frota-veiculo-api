@@ -1,14 +1,26 @@
+import pool from '../config/db.js';
+import 'dotenv/config';
 
-class veiculoService {
-    async getAll(){
-        const res = await pool.query("SELECT *");
-        return res.rows
-    }
-}
+
+ class veiculoService {
  
-async.create(){
-    const res = await pool.query("INSERT INTO veiculos RETURNING *", []);
-        res.rows(0)
+  async create({ modelo, marca, ano, placa }) {
+    const query = `
+      INSERT INTO veiculos (modelo, marca, ano, placa)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *;`;
+    const values = [modelo, marca, ano, placa];
+    const { rows } = await pool.query(query, values);
+    return rows;
+  }
+async getAll(){
+        const res = await pool.query("SELECT * FROM veiculos;");
+        return res.rows
+    }  
 }
 
-export const veiculoService = new veiculoService()
+
+  
+ 
+
+export default new veiculoService();
